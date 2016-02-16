@@ -11,7 +11,7 @@ class CityItem(Item):
 	city_name=Field()
 	city_code=Field()
 
-class townItem(Item):
+class districtItem(Item):
 	city_code=Field()
-	town_name=Field()
-	town_code=Field()
+	district_name=Field()
+	district_code=Field()

@@ -9,8 +9,8 @@ from . import urls
 from . import xpaths
 from .utils import *
 
-class townSpider(BaseSpider):
-    name = 'townSpider'
+class districtSpider(BaseSpider):
+    name = 'districtSpider'
 
     def start_requests(self):
         yield Request(urls.city_index, method='GET')
@@ -28,4 +28,4 @@ class townSpider(BaseSpider):
         jsonbody = {}
         jsonbody = jsonresponse["body"]
         for town in jsonbody:
-        	yield items.townItem(city_code=id,town_name=town["NAME"],town_code=town["CODE"])
+        	yield items.districtItem(city_code=id,district_name=town["NAME"],district_code=town["CODE"])
