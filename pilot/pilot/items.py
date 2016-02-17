@@ -11,7 +11,20 @@ class CityItem(Item):
 	city_name=Field()
 	city_code=Field()
 
-class districtItem(Item):
+class DistrictItem(Item):
 	city_code=Field()
 	district_name=Field()
 	district_code=Field()
+
+class CandidacyItem(Item):
+	candidacy_id=Field()
+	candidacy_img=Field()
+	district_code=Field()
+	party=Field()
+	name=Field()
+	gender=Field()
+	birth=Field()
+	address=Field()
+	education=Field()
+	experience=Field()
+	criminal=Field()

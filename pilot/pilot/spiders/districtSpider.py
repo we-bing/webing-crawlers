@@ -18,14 +18,13 @@ class districtSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         cityCodes = extract_cityCodes(hxs)
-        cityNames = extract_cityNames(hxs)
-        for code, name in zip(cityCodes, cityNames):
-            yield Request(urls.town_index % code, callback=self.parse_town)
+        for code in cityCodes:
+            yield Request(urls.district_index % code, callback=self.parse_district)
 
-    def parse_town(self, response):
-        id = extract_url(response.url, 'cityCode')
+    def parse_district(self, response):
+        city_code = extract_url(response.url, 'cityCode')
         jsonresponse = json.loads(response.body_as_unicode())
         jsonbody = {}
         jsonbody = jsonresponse["body"]
-        for town in jsonbody:
-        	yield items.districtItem(city_code=id,district_name=town["NAME"],district_code=town["CODE"])
+        for district in jsonbody:
+        	yield items.DistrictItem(city_code=city_code,district_name=district["NAME"],district_code=district["CODE"])
