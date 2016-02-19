@@ -5,3 +5,9 @@ city_index = prefix + "main/showDocument.xhtml?electionId=0020160413&topMenuId=P
 district_index = prefix + "bizcommon/selectbox/selectbox_getSggCityCodeJson.json?electionId=0020160413&electionCode=2&cityCode=%s"
 
 candidacy_index = prefix + "electioninfo/electionInfo_report.xhtml?electionId=0020160413&requestURI=%2Felectioninfo%2F0020160413%2Fpc%2Fpcri03_ex.jsp&topMenuId=PC&secondMenuId=PCRI03&menuId=&statementId=PCRI03_%232&electionCode=2&cityCode={0}&sggCityCode={1}&townCode=-1&sggTownCode=-1"
+
+
+watch_prefix = "http://watch.peoplepower21.org"
+member_index = watch_prefix + "/New/search.php"
+member_report = watch_prefix +"/New/cm_info.php?member_seq=%s"
+member_birth = watch_prefix +"/New/cm_info.php?member_seq=%s&info_page=cm_info_private.php"

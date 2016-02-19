@@ -28,3 +28,10 @@ class CandidacyItem(Item):
 	education=Field()
 	experience=Field()
 	criminal=Field()
+
+class AssemblyMemberItem(Item):
+	assembly_id=Field()
+	name=Field()
+	birthYear=Field()
+	attendance_rate=Field()
+	proposal=Field()

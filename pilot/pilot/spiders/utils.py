@@ -4,7 +4,7 @@ import re
 import itertools
 import lxml.html
 
-__all__ = ["convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name"]
+__all__ = ["convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name","extract_ids","extract_texts","extract_integer"]
 
 
 def convert_to_text(e):
@@ -46,6 +46,20 @@ def extract_candidacy_name(hxs, row):
 	xpath = '//tbody/tr[%s]/td[4]/a/text()' % row
 	result = hxs.select(xpath).extract()
 	return result[0].strip()
+
+def extract_ids(hxs, key):
+    xpath = '//a[contains(@href, "%s=")]/@href' % key
+    return hxs.select(xpath).re(r'%s=(\d+)' % key)
+
+def extract_texts(hxs, key):
+    xpath = '//a[contains(@href, "%s=")]/text()' % key
+    return hxs.select(xpath).extract()
+
+def extract_integer(hxs, xpath):
+    result = hxs.select(xpath).re(r'(?:\d*\.)?\d+')
+    if not result: return ''
+    return result[0]
+
 
 	
 	
