@@ -23,7 +23,7 @@ wordCloud 형태로 출력해주는 스크립트
 
 ###Installation & run
 
-    $ git clone git@github.com:we-bing/webing-crawlers.git 
+    $ git clone https://github.com/we-bing/webing-crawlers.git 
     $ cd webing-crawlers
     # python drawWordCloud.py {"query for keywords"} {the number of keywords}
 
