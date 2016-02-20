@@ -6,7 +6,14 @@
 wordCloud 형태로 출력해주는 스크립트
 
 ###Requirements
+ 
+    The installation steps assume that you have the following things installed:
+- Python 2.7
+- pip and setuptools Python packages. Nowadays pip requires and installs setuptools if not installed. Python 2.7.9 and later include pip by default, so you may have it already.
+- lxml. Most Linux distributions ships prepackaged versions of lxml. Otherwise refer to http://lxml.de/installation.html
+- OpenSSL. This comes preinstalled in all operating systems, except Windows where the Python installer ships it bundled.
 
+=====
     $ pip install JPype1  # dependencies for konlpy 
     $ pip install konlpy  # a Python package for natural language processing (NLP) of the Korean language. 
     $ brew install sdl sdl_image sdl_mixer sdl_ttf portmidi
