@@ -19,6 +19,7 @@ wordCloud 형태로 출력해주는 스크립트
     $ brew install sdl sdl_image sdl_mixer sdl_ttf portmidi
     $ brew tap samueljohn/python
     $ brew install pygame
+    $ pip install git+https://github.com/e9t/PyTagCloud.git
     
 
 ###Installation & run
