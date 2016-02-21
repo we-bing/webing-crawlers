@@ -35,3 +35,9 @@ class AssemblyMemberItem(Item):
 	birthYear=Field()
 	attendance_rate=Field()
 	proposal=Field()
+
+class AssemblyNewsKeyword(Item):
+	keyword_id=Field()
+	candidacy_id=Field()
+	keyword_name=Field()
+	keyword_size=Field()
