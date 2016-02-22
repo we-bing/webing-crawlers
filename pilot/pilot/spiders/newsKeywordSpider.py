@@ -26,18 +26,23 @@ class newsKeywordSpider(BaseSpider):
     name = 'newsKeywordSpider'
 
     def get_news_text(self,query):
-        params = urllib.urlencode({'query': query, 'display': 50, 'start': 1})
+        params = urllib.urlencode({'query': query, 'display': 10, 'start': 1})
         headers = {"X-Naver-Client-Id": "TsshNF_3sY3pu9gOkU7d","X-Naver-Client-Secret": "5FOHV3Ysqo"}
         conn = httplib.HTTPSConnection("openapi.naver.com")
-        url = '/v1/search/news.xml?query=%s&display=50&start=1&sort=sim' % urllib.quote_plus(query)
+        url = '/v1/search/news.xml?query=%s&display=10&start=1&sort=sim' % urllib.quote_plus(query)
         conn.request("GET", url ,params, headers)
         response = conn.getresponse()
         root = ET.fromstring(response.read())
-        descriptionTest = ''
-        for description in root.iter('description'):
-            descriptionTest += description.text
-        return descriptionTest
-
+        newsText = ''
+        for link in root.iter('link'):
+            code   = urllib.urlopen(link.text).read()
+            htmlCode = html.fromstring(code)
+            results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
+            for result in results:
+                newsText += result.strip()
+        print(newsText)
+        return newsText
+        
 
     def get_tags(self,text, ntags=20, multiplier=10):
         h = Hannanum()

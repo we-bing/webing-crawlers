@@ -38,10 +38,15 @@ def get_news_text(query):
     conn.request("GET", url ,params, headers)
     response = conn.getresponse()
     root = ET.fromstring(response.read())
-    descriptionTest = ''
-    for description in root.iter('description'):
-        descriptionTest += description.text
-    return descriptionTest
+    newsText = ''
+    for link in root.iter('link'):
+        code   = urllib.urlopen(link.text).read()
+        htmlCode = html.fromstring(code)
+        results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
+        for result in results:
+            newsText += result.strip()
+    print(newsText)
+    return newsText
 
 
 def get_tags(text, ntags=int(sys.argv[2]), multiplier=10):
