@@ -41,3 +41,10 @@ class AssemblyNewsKeyword(Item):
 	candidacy_id=Field()
 	keyword_name=Field()
 	keyword_size=Field()
+
+
+class BillKeywords(Item):
+	name=Field()
+	birth=Field()
+	keyword_name=Field()
+	keyword_size=Field()
