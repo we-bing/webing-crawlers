@@ -34,13 +34,16 @@ class newsKeywordSpider(BaseSpider):
         response = conn.getresponse()
         root = ET.fromstring(response.read())
         newsText = ''
-        for link in root.iter('link'):
-            code   = urllib.urlopen(link.text).read()
-            htmlCode = html.fromstring(code)
-            results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
-            for result in results:
-                newsText += result.strip()
-        print(newsText)
+        for link,title in zip(root.iter('link'), root.iter('title')):
+            print(title.text)
+            if "공천" not in title.text.encode('utf-8'):
+                code   = urllib.urlopen(link.text).read()
+                htmlCode = html.fromstring(code)
+                results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
+                for result in results:
+                    newsText += result.strip()
+            else:
+                print("pass this link")
         return newsText
         
 
@@ -60,7 +63,10 @@ class newsKeywordSpider(BaseSpider):
         for row in range(1, len(rows)+1):
             candidacy_id=extract_candidacy_id(hxs,row)
             candidacy_name=extract_candidacy_name(hxs,row)
-            query = candidacy_name.encode('utf-8') + "후보"
+            experience=extract_candidacy_field(hxs,row,10)[0].split(',')
+            job = experience[0][3:]
+            query = candidacy_name.encode('utf-8')+" "+job.encode('utf-8').strip()
+            print(query)
             text = self.get_news_text(query)
             tags = self.get_tags(text)
             for tag in tags:

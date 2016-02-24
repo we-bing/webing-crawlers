@@ -4,7 +4,7 @@ import re
 import itertools
 import lxml.html
 
-__all__ = ["convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name","extract_ids","extract_texts","extract_integer","extract_news_contents"]
+__all__ = ["convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name","extract_ids","extract_texts","extract_integer","extract_news_contents","extract_ids_for_popong","extract_popong_name","extract_popong_keywords","extract_popong_birth"]
 
 
 def convert_to_text(e):
@@ -63,8 +63,26 @@ def extract_integer(hxs, xpath):
 def extract_news_contents(hxs):
     xpath = "//div[@id='articleBodyContents']/text()"
     result = hxs.select(xpath).extract()
-    # result = hxs.extract()
     return convert_to_text(lxml.html.fromstring(result[0]))
+
+def extract_ids_for_popong(hxs, key):
+    xpath = '//a[contains(@href, "/%s/")]/@href' % key
+    return hxs.select(xpath).re(r'/%s/(\d+)' % key)
+
+def extract_popong_name(hxs):
+    xpath = '//a[@class="person-name"]/text()'
+    return hxs.select(xpath).extract()
+
+def extract_popong_birth(hxs):
+    xpath = '//a[contains(@href, "/entity/")]/text()'
+    return hxs.select(xpath).extract()
+
+def extract_popong_keywords(hxs):
+    xpath = '//div[@class="person-summary-vis"]/script[5]/text()'
+    scriptText = hxs.select(xpath).re(r'{(.*)},')
+    tagList = scriptText[0].split(',')
+    return tagList
+
 
 
 	

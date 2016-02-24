@@ -11,3 +11,8 @@ watch_prefix = "http://watch.peoplepower21.org"
 member_index = watch_prefix + "/New/search.php"
 member_report = watch_prefix +"/New/cm_info.php?member_seq=%s"
 member_birth = watch_prefix +"/New/cm_info.php?member_seq=%s&info_page=cm_info_private.php"
+
+popong_prefix = "http://ko.pokr.kr"
+popong_index = popong_prefix + "/person/"
+popong_person = popong_prefix + "/person/%s"
+
