@@ -36,7 +36,7 @@ class newsKeywordSpider(BaseSpider):
         newsText = ''
         for link,title in zip(root.iter('link'), root.iter('title')):
             print(title.text)
-            if "공천" not in title.text.encode('utf-8'):
+            if "공천" not in title.text.encode('utf-8') and "명단" not in title.text.encode('utf-8') and "예상" not in title.text.encode('utf-8'):
                 try:
                     code   = urllib.urlopen(link.text).read()
                     htmlCode = html.fromstring(code)
@@ -69,12 +69,12 @@ class newsKeywordSpider(BaseSpider):
             candidacy_name=extract_candidacy_name(hxs,row)
             if len(candidacy_id.strip()) < 1 : 
                 continue
-            experience=extract_candidacy_field(hxs,row,10)[0].split(',')
-            job = experience[0][3:]
+            job = extract_candidacy_field(hxs,row,10)[-1][3:]
             query = candidacy_name.encode('utf-8')+" "+job.encode('utf-8').strip()
             print(query)
             text = self.get_news_text(query)
             tags = self.get_tags(text)
+            print(text)
             for tag in tags:
                 yield items.AssemblyNewsKeyword(candidacy_id=candidacy_id,keyword_name=tag['tag'].encode('utf-8'),keyword_size=tag['size'])
 
