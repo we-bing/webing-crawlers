@@ -4,7 +4,7 @@ import MySQLdb
 
 
 # Open database connection
-db = MySQLdb.connect("localhost","root","Starter?5","WEBING-PILOT" )
+db = MySQLdb.connect("localhost","root","","webingpilot" )
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()

@@ -33,19 +33,22 @@ def extract_candidacy_field(hxs, row, idx):
 	return hxs.select(xpath).extract()
 
 def extract_candidacy_id(hxs, row):
-	xpath = '//tbody/tr[%s]/td/img/@src' % row
-	result = hxs.select(xpath).re(r'(\d+).jpg')
-	return result[0]
+    xpath = '//tbody/tr[%s]/td/img/@src' % row
+    result = hxs.select(xpath).re(r'(\d+).(JPG|jpg|gif|GIF|jpeg|JPEG)')
+    if not result: return ''
+    return result[0]
 
 def extract_candidacy_img(hxs, row):
-	xpath = '//tbody/tr[%s]/td/img/@src' % row
-	result = hxs.select(xpath).extract()
-	return result[0]
+    xpath = '//tbody/tr[%s]/td/img/@src' % row
+    result = hxs.select(xpath).extract()
+    if not result: return ''
+    return result[0]
 
 def extract_candidacy_name(hxs, row): 
-	xpath = '//tbody/tr[%s]/td[4]/a/text()' % row
-	result = hxs.select(xpath).extract()
-	return result[0].strip()
+    xpath = '//tbody/tr[%s]/td[4]/a/text()' % row
+    result = hxs.select(xpath).extract()
+    if not result: return ''
+    return result[0].strip()
 
 def extract_ids(hxs, key):
     xpath = '//a[contains(@href, "%s=")]/@href' % key
