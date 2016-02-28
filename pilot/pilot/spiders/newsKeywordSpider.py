@@ -37,11 +37,15 @@ class newsKeywordSpider(BaseSpider):
         for link,title in zip(root.iter('link'), root.iter('title')):
             print(title.text)
             if "공천" not in title.text.encode('utf-8'):
-                code   = urllib.urlopen(link.text).read()
-                htmlCode = html.fromstring(code)
-                results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
-                for result in results:
-                    newsText += result.strip()
+                try:
+                    code   = urllib.urlopen(link.text).read()
+                    htmlCode = html.fromstring(code)
+                    results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
+                    for result in results:
+                        newsText += result.strip()
+                except IOError as e:
+                    print("fail to crawl informaion about "+title.text)
+                    pass
             else:
                 print("pass this link")
         return newsText
@@ -63,6 +67,8 @@ class newsKeywordSpider(BaseSpider):
         for row in range(1, len(rows)+1):
             candidacy_id=extract_candidacy_id(hxs,row)
             candidacy_name=extract_candidacy_name(hxs,row)
+            if len(candidacy_id.strip()) < 1 : 
+                continue
             experience=extract_candidacy_field(hxs,row,10)[0].split(',')
             job = experience[0][3:]
             query = candidacy_name.encode('utf-8')+" "+job.encode('utf-8').strip()

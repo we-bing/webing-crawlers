@@ -14,7 +14,7 @@ class candidacySpider(BaseSpider):
 
     def start_requests(self):
         yield Request(urls.city_index, method='GET')
-
+#bizcommon/selectbox/selectbox_getSggCityCodeJson.json?electionId=0020160413&electionCode=2&cityCode=%s -1 하면 시티코드 불필요.
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         cityCodes = extract_cityCodes(hxs)
@@ -49,6 +49,8 @@ class candidacySpider(BaseSpider):
             education=extract_candidacy_field(hxs,row,9)
             experience=extract_candidacy_field(hxs,row,10)
             criminal=extract_candidacy_field(hxs,row,11)
+            if len(candidacy_id.strip()) < 1:
+                print("need to confirm !!"+name+district_code)
             yield items.CandidacyItem(
                     candidacy_id=candidacy_id,
                     candidacy_img=candidacy_img,
