@@ -16,8 +16,8 @@ class citySpider(BaseSpider):
         yield Request(urls.city_index, method='GET')
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        cityCodes = extract_cityCodes(hxs)
-        cityNames = extract_cityNames(hxs)
-        for code, name in zip(cityCodes, cityNames):
-            yield items.CityItem(city_code=code, city_name=name)
+    	jsonresponse = json.loads(response.body_as_unicode())	
+        jsonbody = {}
+        jsonbody = jsonresponse["body"]
+        for city in jsonbody:
+            yield items.CityItem(city_code=city["CODE"], city_name=city["NAME"])

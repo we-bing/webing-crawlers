@@ -8,13 +8,20 @@
 from scrapy.item import Item, Field
 
 class CityItem(Item):
-	city_name=Field()
-	city_code=Field()
+	cityName=Field()
+	cityCode=Field()
 
 class DistrictItem(Item):
-	city_code=Field()
-	district_name=Field()
-	district_code=Field()
+	cityCode=Field()
+	districtName=Field()
+	districtCode=Field()
+
+class TownItem(Item):
+	cityCode=Field()
+	districtName=Field()
+	districtCode=Field()
+	townName=Field()
+	townCode=Field()
 
 class CandidacyItem(Item):
 	candidacy_id=Field()
