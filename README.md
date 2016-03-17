@@ -9,6 +9,7 @@ wordCloud 형태로 출력해주는 스크립트
  
     The installation steps assume that you have the following things installed:
 - Python 2.7
+- Java1.6+
 - pip and setuptools Python packages. Nowadays pip requires and installs setuptools if not installed. Python 2.7.9 and later include pip by default, so you may have it already.
 - lxml. Most Linux distributions ships prepackaged versions of lxml. Otherwise refer to http://lxml.de/installation.html
 - OpenSSL. This comes preinstalled in all operating systems, except Windows where the Python installer ships it bundled.
