@@ -15,21 +15,22 @@ class candidacySpider(BaseSpider):
     def start_requests(self):
         yield Request(urls.city_index, method='GET')
 #bizcommon/selectbox/selectbox_getSggCityCodeJson.json?electionId=0020160413&electionCode=2&cityCode=%s -1 하면 시티코드 불필요.
+
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        cityCodes = extract_cityCodes(hxs)
+        # hxs = HtmlXPathSelector(response)
+        # cityCodes = extract_cityCodes(hxs)
+        jsonresponse = json.loads(response.body_as_unicode())
+        cityCodes = {}
+        cityCodes = jsonresponse["jsonResult"]["body"]
         for code in cityCodes:
-            if int(code) == -1:
-                continue
-            yield Request(urls.district_index % code, callback=self.parse_district)
+            yield Request(urls.district_index % code["CODE"], callback=self.parse_district)
 
             
-
     def parse_district(self, response):
         city_code = extract_url(response.url, 'cityCode')
         jsonresponse = json.loads(response.body_as_unicode())
         jsonbody = {}
-        jsonbody = jsonresponse["body"]
+        jsonbody = jsonresponse["jsonResult"]["body"]
         for district in jsonbody:
             yield Request(urls.candidacy_index.format(city_code,district["CODE"].encode('utf-8')) , callback=self.parse_candidacy)
 
@@ -41,14 +42,15 @@ class candidacySpider(BaseSpider):
             candidacy_id=extract_candidacy_id(hxs,row)
             candidacy_img=extract_candidacy_img(hxs,row)
             district_code=district_code
-            party=extract_candidacy_field(hxs,row,2)
+            party=extract_candidacy_field(hxs,row,4)
             name=extract_candidacy_name(hxs,row)
-            gender=extract_candidacy_field(hxs,row,5)
-            birth=extract_candidacy_field(hxs,row,6)
-            address=extract_candidacy_field(hxs,row,7)
-            education=extract_candidacy_field(hxs,row,9)
-            experience=extract_candidacy_field(hxs,row,10)
-            criminal=extract_candidacy_field(hxs,row,11)
+            gender=extract_candidacy_field(hxs,row,6)
+            birth=extract_candidacy_field(hxs,row,7)
+            address=extract_candidacy_field(hxs,row,8)
+            education=extract_candidacy_field(hxs,row,10)
+            experience=extract_candidacy_field(hxs,row,11)
+            criminal=extract_candidacy_field(hxs,row,17)
+            job=extract_candidacy_field(hxs,row,9)
             if len(candidacy_id.strip()) < 1:
                 print("need to confirm !!"+name+district_code)
             yield items.CandidacyItem(
@@ -62,5 +64,6 @@ class candidacySpider(BaseSpider):
                     address=address,
                     education=education,
                     experience=experience,
-                    criminal=criminal
+                    criminal=criminal,
+                    job=job
                 )

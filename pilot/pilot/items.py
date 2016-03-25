@@ -35,6 +35,7 @@ class CandidacyItem(Item):
 	education=Field()
 	experience=Field()
 	criminal=Field()
+	job=Field()
 
 class AssemblyMemberItem(Item):
 	assembly_id=Field()

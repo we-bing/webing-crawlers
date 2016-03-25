@@ -59,9 +59,16 @@ class newsKeywordSpider(BaseSpider):
                     for n, c in count.most_common(ntags)]
 
     def start_requests(self):
-        yield Request(urls.candidacy_index.format(-1,-1), method='POST')
+        yield Request(urls.city_index, method='POST')
 
     def parse(self, response):
+        jsonresponse = json.loads(response.body_as_unicode())
+        cityCodes = {}
+        cityCodes = jsonresponse["jsonResult"]["body"]
+        for code in cityCodes:
+            yield Request(urls.candidacy_index.format(code["CODE"]), callback=self.parse_keywords)
+
+    def parse_keywords(self, response):
         hxs = HtmlXPathSelector(response)
         rows = hxs.xpath('//tbody/tr')
         for row in range(1, len(rows)+1):
@@ -77,4 +84,3 @@ class newsKeywordSpider(BaseSpider):
             print(text)
             for tag in tags:
                 yield items.AssemblyNewsKeyword(candidacy_id=candidacy_id,keyword_name=tag['tag'].encode('utf-8'),keyword_size=tag['size'])
-
