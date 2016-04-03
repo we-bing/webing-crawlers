@@ -4,7 +4,7 @@ import re
 import itertools
 import lxml.html
 
-__all__ = ["convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name","extract_ids","extract_texts","extract_integer","extract_news_contents","extract_ids_for_popong","extract_popong_name","extract_popong_keywords","extract_popong_birth"]
+__all__ = ["extract_proposal","extract_attendance_rate","convert_to_text","extract_cityCodes","extract_cityNames","extract_url","extract_candidacy_field","extract_candidacy_id","extract_candidacy_img","extract_candidacy_name","extract_ids","extract_texts","extract_integer","extract_news_contents","extract_ids_for_popong","extract_popong_name","extract_popong_keywords","extract_popong_birth"]
 
 
 def convert_to_text(e):
@@ -16,6 +16,15 @@ def convert_to_text(e):
         if e.tail: texts.append(e.tail.strip())
     return ''.join(texts)
 
+def extract_attendance_rate(hxs):
+    xpath = '//span[@style="color:#23C6C8"]/text()'
+    result = hxs.select(xpath).re(r'(?:\d*\.)?\d+')
+    return result[1]
+
+def extract_proposal(hxs):
+    xpath = '//span[@style="color:#23C6C8"]/text()'
+    result = hxs.select(xpath).re(r'(?:\d*\.)?\d+')
+    return result[0]
 
 def extract_cityCodes(hxs):
     xpath = '//select[@id="cityCode"]/option/@value'
