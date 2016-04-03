@@ -9,11 +9,14 @@ town_index = prefix + "electioninfo/electionInfo_report.xhtml?electionId=0020160
 candidacy_keyword_index = prefix + 'electioninfo/electionInfo_report.xhtml?electionId=0020160413&requestURI=%2FWEB-INF%2Fjsp%2Felectioninfo%2F0020160413%2Fcp%2Fcpri03.jsp&topMenuId=CP&secondMenuId=CPRI03&menuId=CPRI03&statementId=CPRI03_%232&electionCode=2&cityCode={0}&sggCityCode=-1&proportionalRepresentationCode=-1&townCode=-1&sggTownCode=-1&dateCode=0&x=37&y=10'
 
 watch_prefix = "http://watch.peoplepower21.org"
-member_index = watch_prefix + "/New/search.php"
-member_report = watch_prefix +"/New/cm_info.php?member_seq=%s"
-member_birth = watch_prefix +"/New/cm_info.php?member_seq=%s&info_page=cm_info_private.php"
+member_private = watch_prefix + "/?mid=Member&member_seq=%s"
+# member_index = watch_prefix + "/New/search.php"
+# member_report = watch_prefix +"/New/cm_info.php?member_seq=%s"
+# member_birth = watch_prefix +"/New/cm_info.php?member_seq=%s&info_page=cm_info_private.php"
 
 popong_prefix = "http://ko.pokr.kr"
 popong_index = popong_prefix + "/person/"
 popong_person = popong_prefix + "/person/%s"
+
+
 

@@ -35,23 +35,25 @@ class newsKeywordSpider(BaseSpider):
         root = ET.fromstring(response.read())
         newsText = ''
         for link,title in zip(root.iter('link'), root.iter('title')):
-            print(title.text)
-            if "공천" not in title.text.encode('utf-8') and "명단" not in title.text.encode('utf-8') and "후보자 등록" not in title.text.encode('utf-8'):
-                try:
-                    code   = urllib.urlopen(link.text).read()
-                    htmlCode = html.fromstring(code)
-                    results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
-                    for result in results:
-                        newsText += result.strip()
-                except IOError as e:
-                    print("fail to crawl informaion about "+title.text)
-                    pass
-            else:
-                print("pass this link")
+            try:
+                print(title.text)
+                if "공천" not in title.text.encode('utf-8') and "명단" not in title.text.encode('utf-8') and "후보자 등록" not in title.text.encode('utf-8'):
+                    
+                        code   = urllib.urlopen(link.text).read()
+                        htmlCode = html.fromstring(code)
+                        results = htmlCode.xpath('//div[@id="articleBodyContents"]/text()')
+                        for result in results:
+                            newsText += result.strip()
+                    
+                else:
+                    print("pass this link")
+            except:
+                print("fail to crawl informaion about "+title.text)
+                pass
         return newsText
         
 
-    def get_tags(self,text, ntags=20, multiplier=10):
+    def get_tags(self,text, ntags=10, multiplier=10):
         h = Hannanum()
         nouns = h.nouns(text)
         count = Counter(nouns)
@@ -78,7 +80,9 @@ class newsKeywordSpider(BaseSpider):
                 continue    
             # job = extract_candidacy_field(hxs,row,9)[0]
             job = "후보"
-            query = candidacy_name.encode('utf-8')+" "+job.encode('utf-8').strip()
+            query = candidacy_name.encode('utf-8')+" "+job.strip()
+            print(row)
+            print(len(rows))
             print(query)
             text = self.get_news_text(query)
             tags = self.get_tags(text)

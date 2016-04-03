@@ -14,7 +14,7 @@ BOT_NAME = 'pilot'
 SPIDER_MODULES = ['pilot.spiders']
 NEWSPIDER_MODULE = 'pilot.spiders'
 
-FEED_URI = 'newsKeywords.csv'
+FEED_URI = 'newsKeywords3.csv'
 FEED_FORMAT = 'csv'
 
 
